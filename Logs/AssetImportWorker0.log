@@ -660,3 +660,7 @@ Memory consumption went from 109.8 MB to 102.2 MB.
 Total: 5.838700 ms (FindLiveObjects: 0.341400 ms CreateObjectMapping: 0.079600 ms MarkObjects: 3.128500 ms  DeleteObjects: 2.287900 ms)
 
 Prepare: number of updated asset objects reloaded= 0
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
