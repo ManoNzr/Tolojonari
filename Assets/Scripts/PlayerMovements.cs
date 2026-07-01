@@ -16,11 +16,12 @@ public class PlayerMovements : MonoBehaviour
 
     [Header("Course")]
     [SerializeField] bool canRun = true;
-    [SerializeField] bool runToggle = false;
+    [SerializeField] bool runToggle = false; 
 
     [Header("Détection du sol")]
+    [SerializeField] Transform groundCheck; 
+    [SerializeField] float groundCheckRadius = 0.25f;
     [SerializeField] LayerMask groundLayer = ~0;
-    [SerializeField] float groundCheckDistance = 0.15f;
 
     [Header("Input Actions (Player map)")]
     [SerializeField] InputActionReference forward;
@@ -29,6 +30,9 @@ public class PlayerMovements : MonoBehaviour
     [SerializeField] InputActionReference right;
     [SerializeField] InputActionReference jump;
     [SerializeField] InputActionReference run;
+
+    [Header("Debug")]
+    [SerializeField] bool debugInput = false;
 
     bool isRunning;
     bool jumpQueued;
@@ -71,6 +75,9 @@ public class PlayerMovements : MonoBehaviour
         moveInput = new Vector3(x, 0f, z).normalized;
 
         if (!canRun) isRunning = false;
+
+        if (debugInput)
+            Debug.Log($"moveInput = {moveInput} | isRunning = {isRunning} | grounded = {IsGrounded()}");
     }
 
     void OnJump(InputAction.CallbackContext ctx)
@@ -82,7 +89,6 @@ public class PlayerMovements : MonoBehaviour
     void OnRunPerformed(InputAction.CallbackContext ctx)
     {
         if (!canRun) return;
-
         if (runToggle) isRunning = !isRunning;
         else isRunning = true;
     }
@@ -110,8 +116,14 @@ public class PlayerMovements : MonoBehaviour
 
     bool IsGrounded()
     {
-        Vector3 origin = playerCollider.bounds.center;
-        float dist = playerCollider.bounds.extents.y + groundCheckDistance;
-        return Physics.Raycast(origin, Vector3.down, dist, groundLayer);
+        if (groundCheck == null) return false;
+        return Physics.CheckSphere(groundCheck.position, groundCheckRadius, groundLayer);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (groundCheck == null) return;
+        Gizmos.color = Application.isPlaying && IsGrounded() ? Color.green : Color.red;
+        Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
     }
 }
