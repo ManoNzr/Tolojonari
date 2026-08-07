@@ -9,7 +9,7 @@ public class MainMenuManagerScript : MonoBehaviour
 
     public void StartNewGame()
     {
-        SceneManager.LoadScene(newGameScene);
+        GameManager.Instance.StartGame();
         Debug.Log("Lancement d'un nouveau jeu..");
     }
 
