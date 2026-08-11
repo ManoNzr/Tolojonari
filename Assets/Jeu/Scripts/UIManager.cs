@@ -1,10 +1,15 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] Hearts; // Assure-toi que tes cœurs sont dans l'ordre (0 = gauche, 3 = droite)
+    [SerializeField] private GameObject[] Hearts;
+
+
+    [SerializeField] private GameObject PauseUI;
 
     public static UIManager Instance;
+
 
     private void Awake()
     {
@@ -17,9 +22,26 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    /*private void Start()
+    {
+        
+    }*/
+
+
+    public void OpenPauseUI()
+    {
+        PauseUI.SetActive(true);
+    }
+
+    public void CloseUI()
+    {
+        PauseUI.SetActive(false);
+    }
+
+
     public void UpdateHearts(int currentHealth)
     {
-        // On parcourt TOUS les cœurs de ton tableau
         for (int i = 0; i < Hearts.Length; i++)
         {
 
@@ -33,4 +55,11 @@ public class UIManager : MonoBehaviour
             }
         }
     }
+
+
+    public void GoMainMenu()
+    {
+        GameManager.Instance.goMainMenu();
+    }
+
 }

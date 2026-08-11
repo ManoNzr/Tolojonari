@@ -5,6 +5,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    private bool isPaused = false;
+
     void Awake()
     {
         if (Instance == null)
@@ -21,26 +23,47 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // Au lieu de lancer le jeu, on lance le menu !
         LoadMainMenu();
 
-        // C'est ici plus tard que tu mettras ta ligne : 
-        // SaveSystem.LoadData();
     }
+
+    public void PauseGame()
+    {
+        if (!isPaused)
+        {
+            isPaused = true;
+            UIManager.Instance.OpenPauseUI();
+        }
+    }
+
+    public void UnPauseGame()
+    {
+        if (isPaused) isPaused = false; UIManager.Instance.CloseUI();
+    }
+
+    public bool IsPaused
+        { get { return isPaused; } }
 
     public void LoadMainMenu()
     {
-        // On charge le menu principal
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
     }
 
-    // Le bouton "Jouer" de ton menu principal appellera cette fonction !
+    public void goMainMenu()
+    {
+
+        SceneManager.UnloadSceneAsync("Stage 0");
+        SceneManager.UnloadSceneAsync("UI");
+
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+
+    }
+
+
     public void StartGame()
     {
-        // 1. On enlève le menu principal de l'écran
         SceneManager.UnloadSceneAsync("MainMenu");
 
-        // 2. On charge l'UI et le niveau en fond (Async évite que le jeu freeze)
         SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
         SceneManager.LoadSceneAsync("Stage 0", LoadSceneMode.Additive);
     }

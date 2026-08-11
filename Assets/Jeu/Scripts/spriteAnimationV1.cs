@@ -39,6 +39,13 @@ public class spriteAnimationV1 : MonoBehaviour
 
     void Update()
     {
+
+        if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
+
+
         if (targetMaterial == null || playerController == null || walkTextures.Length < 3) return;
 
         // 3. Est-ce que le joueur marche ?

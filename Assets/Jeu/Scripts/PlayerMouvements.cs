@@ -28,6 +28,11 @@ public class PlayerMouvements : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.Instance.IsPaused)
+        {
+            return;
+        }
+
         // 1. Déplacement au sol et Saut
         if (controller.isGrounded)
         {

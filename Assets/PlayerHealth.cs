@@ -41,6 +41,20 @@ public class PlayerHealth : MonoBehaviour
         {
             TakeDamage(1);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+
+            if (GameManager.Instance.IsPaused)
+            {
+                GameManager.Instance.UnPauseGame();
+            }
+            else
+            {
+                GameManager.Instance.PauseGame();
+            }
+
+        }
     }
 
     private void Die()
