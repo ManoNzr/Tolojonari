@@ -45,6 +45,11 @@ public class PlayerHealth : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
 
+            if(!GameManager.Instance.canHePause())
+            {
+                return; 
+            }
+
             if (GameManager.Instance.IsPaused)
             {
                 GameManager.Instance.UnPauseGame();
@@ -59,7 +64,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Mario de papier est tout déchiré ! (Game Over)");
+        GameManager.Instance.death();
 
         gameObject.SetActive(false);
     }

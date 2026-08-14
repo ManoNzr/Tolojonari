@@ -7,6 +7,8 @@ public class GameManager : MonoBehaviour
 
     private bool isPaused = false;
 
+    private bool canPause = false;
+
     void Awake()
     {
         if (Instance == null)
@@ -24,17 +26,30 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         LoadMainMenu();
-
+        canPause = true;
     }
 
     public void PauseGame()
     {
+        if (!canPause)
+        {
+            return;
+        }
         if (!isPaused)
         {
             isPaused = true;
             UIManager.Instance.OpenPauseUI();
         }
     }
+
+    public void setCanPause(bool value)
+    {
+        canPause = value;
+    }
+
+    public bool canHePause()
+        { return canPause; }
+
 
     public void UnPauseGame()
     {
@@ -48,6 +63,17 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
     }
+
+
+    public void death()
+    {
+        canPause = false;
+        isPaused = true;
+        UIManager.Instance.showDeathScreen();
+
+    }
+
+
 
     public void goMainMenu()
     {

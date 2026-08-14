@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private GameObject PauseUI;
 
+    [SerializeField] private GameObject deathScreen;
+
     public static UIManager Instance;
 
 
@@ -21,6 +23,8 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        deathScreen.SetActive(false);
     }
 
     /*private void Start()
@@ -37,6 +41,12 @@ public class UIManager : MonoBehaviour
     public void CloseUI()
     {
         PauseUI.SetActive(false);
+    }
+
+
+    public void showDeathScreen()
+    {
+        deathScreen.SetActive(true);
     }
 
 
